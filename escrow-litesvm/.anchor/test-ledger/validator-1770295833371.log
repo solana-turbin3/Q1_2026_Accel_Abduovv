@@ -1,0 +1,21 @@
+[2026-02-05T12:50:33.377994463Z INFO  solana_test_validator] agave-validator 4.0.0 (src:6ecbe264; feat:3914218809, client:Agave)
+[2026-02-05T12:50:33.380177480Z INFO  solana_test_validator] Starting validator with: ArgsOs {
+        inner: [
+            "solana-test-validator",
+            "--ledger",
+            ".anchor/test-ledger",
+            "--mint",
+            "ASVN9J8p5DfTGsiimZMWJkBJMbofR5p2bUWzdakSNn11",
+            "--bpf-program",
+            "FircrADQ2wgGuvpm8qneNCfKM7o5zoHTWnDQxngpTQ3J",
+            "/home/abduo/Q1_2026_Accel_Abduovv/escrow-litesvm/target/deploy/anchor_escrow.so",
+        ],
+    }
+[2026-02-05T12:50:33.382063993Z INFO  solana_perf] AVX detected
+[2026-02-05T12:50:33.382136346Z INFO  solana_perf] AVX2 detected
+[2026-02-05T12:50:33.642799546Z INFO  solana_faucet::faucet] Faucet started. Listening on: 0.0.0.0:9900
+[2026-02-05T12:50:33.642889102Z INFO  solana_faucet::faucet] Faucet account address: AffWtVp13RybhuHxvopmpZyQtDpDrTAgvpXgZTqvymN4
+[2026-02-05T12:50:33.705056864Z INFO  solana_test_validator] Feature for mustRekeyVm2QHYB3JPefBiU4BY3Z6JkW2k3Scw5GWP deactivated
+[2026-02-05T12:50:33.709081355Z INFO  agave_validator::admin_rpc_service] started admin rpc service!
+[2026-02-05T12:50:34.156924423Z INFO  solana_ledger::blockstore] Opening blockstore at ".anchor/test-ledger/rocksdb"
+[2026-02-05T12:50:34.235867393Z WARN  solana_ledger::blockstore_db] Unable to detect Rocks columns: Error { message: "IO error: No such file or directory: While opening a file for sequentially reading: .anchor/test-ledger/rocksdb/CURRENT: No such file or directory" }
