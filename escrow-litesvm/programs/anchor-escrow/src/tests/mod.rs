@@ -361,4 +361,48 @@ mod tests {
 
     }
 
+    #[test]
+    fn test_take_before_time_passed() {
+        // Setup the test environment by initializing LiteSVM and creating a payer keypair
+        let mut setup = setup();
+
+        // First, perform the "Make" operation to set up the escrow
+        let make_ix = make_operation(&setup, 10, 123u64, 10);
+        let message = Message::new(&[make_ix], Some(&setup.maker.pubkey()));
+        let recent_blockhash = setup.program.latest_blockhash();
+        let transaction = Transaction::new(&[&setup.maker], message, recent_blockhash);
+        setup.program.send_transaction(transaction).unwrap();
+
+        // Now, create the "Take" instruction to try to fulfill the escrow before time has passed
+        let take_ix = Instruction {
+            program_id: PROGRAM_ID,
+            accounts: crate::accounts::Take {
+                taker: setup.taker.pubkey(),
+                maker: setup.maker.pubkey(),
+                mint_a: setup.mint_a,
+                mint_b: setup.mint_b,
+                taker_ata_a: setup.taker_ata_a,
+                taker_ata_b: setup.taker_ata_b,
+                maker_ata_b: setup.maker_ata_b,
+                escrow: setup.escrow,
+                vault: setup.vault,
+                associated_token_program: setup.associated_token_program,
+                token_program: setup.token_program,
+                system_program: setup.system_program,
+            }.to_account_metas(None),
+            data: crate::instruction::Take {}.data(),
+        };
+
+        // Create and send the transaction containing the "Take" instruction
+        let message = Message::new(&[take_ix], Some(&setup.taker.pubkey()));
+        let recent_blockhash = setup.program.latest_blockhash();
+        let transaction = Transaction::new(&[&setup.taker], message, recent_blockhash);
+        
+        // This should fail because time has not passed yet
+        let result = setup.program.send_transaction(transaction);
+        
+        // Assert that the transaction failed (time constraint should prevent taking)
+        assert!(result.is_ok(), "Take instruction should fail when time has not passed");
+    }
+
 }

@@ -73,7 +73,7 @@ impl<'info> Take<'info> {
 
         let clock = Clock::get().map_err(|_| ErrorCode::ClockNotFound)?;
         require!(
-            clock.unix_timestamp - self.escrow.created_at <= AFTER_FIVE_DAYS,
+            clock.unix_timestamp - self.escrow.created_at >= AFTER_FIVE_DAYS,
             ErrorCode::EscrowExpired
         );
 
